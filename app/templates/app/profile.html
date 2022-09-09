@@ -1,0 +1,116 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+{% block title %}user Profile{% endblock title %}
+
+{% block content %}
+
+<div class="container my-5" style="padding-top: 50px;">
+  <div class="row ">
+
+    <div class="col-md-6">
+
+      <div class="card align-items-center" style="border: none;">
+        {% if user.image %}
+        <img src="{{ user.image.url }}" alt="" width="50%" height="300px">
+        {% else %}
+        <img src="{% static 'app/images/img/profile1.jpg' %}" alt="" width="50%" height="300px">
+        {% endif %}
+        <div class="card-body">
+          <center><h5 class="card-title">{{user.name}}</h5></center>
+          <br>
+          {% if user.pk == request.user.pk %}
+          <a href="{% url 'update' user.id %}" role="button" class="btn btn-styled">Edit Profile</a>
+          <a href="{% url 'post' %}" role="button" class="btn btn-styled">Upload Video</a>
+          
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h6>User Information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Name:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ user.name }}</b></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Email:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ user.email }}</b></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Location:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ user.location }}</b></p>
+            </div>
+          </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if user.pk == request.user.pk %}
+<div class="container my-5">
+  <center>
+    <h2>My Videos</h1>
+  </center>
+  <hr>
+  <div class="row">
+    {% for x in myupload %}
+    <div class="col-md-4 my-3 ">
+      <div class="card h-100">
+        {% if x.video %}
+        <video controls autostart="false">
+          <source src="{{x.video.url}}" type="video/mp4" />
+        </video>
+        {% else %}
+        <div></div>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ x.caption }} </h5>
+          <span class="text-muted">Date & Time: {{ x.publish_at }}</span></h5>
+          <br><br>
+          <p class="card-text">
+            {{ x.description | truncatewords:10 }} <a href="{% url 'video-detail' x.id %}">Read More...</a>
+          </p>
+          <p>{% get_hit_count for x %} Views</p>
+
+        </div>
+        {% if user.pk == request.user.pk  %}
+        <div class="card-footer">
+          <a href="{% url 'video-edit' x.id %}" role="button" class="btn btn-info">Edit</a>
+          <a href="{% url 'video-delete' x.id %}" role="button" class="btn btn-danger">Delete</a>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}

@@ -1,1 +1,34 @@
 {% extends 'app/base.html' %}
+{% load static %}
+{% load hitcount_tags %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+  
+
+ <div class="container mt-5" style="padding-top: 80px;">
+  <div class="row">
+    {% for x in all %}
+    <div class="col-md-4 my-3">
+      <div class="card h-100" >
+        <video  controls autostart="false">
+          <source src="{{x.video.url}}" type="video/mp4" />
+        </video>
+        <div class="card-body">
+          <h5 class="card-title">{{x.caption}}</h5>
+          <p class="card-text">Uploded by {{x.user.name}}
+          </p>
+          <p>{% get_hit_count for x %} Views</p>
+          <form action="{% url 'video-detail' x.id %}" method="get">
+            <input type="hidden" name="postid" value="{{x.id}}">
+            <button type="submit" class="btn btn-styled">See Details</button>
+          </form>
+          <!-- <a href="{% url 'video-detail' x.id %}" class="btn btn-primary">See Details</a> -->
+        </div>
+      </div>
+      
+    </div>
+    {% endfor %}
+  </div>
+ </div>
+
+  {% endblock content %}

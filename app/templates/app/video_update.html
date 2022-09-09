@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Edit Post{% endblock title %}
+
+{% block content %}
+
+<div class="contaier mt-5" style="padding-top: 80px;">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h1>Video Upload</h1>
+        </div>
+        <div class="card-body">
+          <form action="" method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {{ form | crispy }}
+            <br>
+            <input type="submit" value="Update" class="btn btn-styled">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

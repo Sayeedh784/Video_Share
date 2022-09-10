@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-so0^mo+9mx4v1u*1_ogx%z)x-hcoysli#f&1as7lty&w8_#i7+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','sharevideo.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','sharevideos.herokuapp.com']
 
 
 # Application definition
